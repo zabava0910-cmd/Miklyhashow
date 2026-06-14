@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MIKLYXASHOW — 34 года, 777 волков 🎰</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Courier New', 'Monaco', monospace;
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* БАЗОВЫЙ СТИЛЬ КАРТОЧКИ (меняется только фон и обводка) */
+    .stream-card {
+      max-width: 1200px;
+      width: 100%;
+      backdrop-filter: blur(10px);
+      border: 2px solid;
+      border-radius: 40px;
+      padding: 30px;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ========== ТЕМА 1: БЕЛЫЙ ФОН + ЧЁРНАЯ ОБВОДКА ========== */
+    body.theme-white-bg-black-border {
+      background: white;
+    }
+    body.theme-white-bg-black-border .stream-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-color: black;
+      box-shadow: 0 0 50px rgba(0,0,0,0.1);
+    }
+    body.theme-white-bg-black-border .nick-header,
+    body.theme-white-bg-black-border .congrats-title,
+    body.theme-white-bg-black-border .greeting-name,
+    body.theme-white-bg-black-border .approve-text,
+    body.theme-white-bg-black-border .quote,
+    body.theme-white-bg-black-border .chat-line,
+    body.theme-white-bg-black-border .panel p,
+    body.theme-white-bg-black-border footer,
+    body.theme-white-bg-black-border .followers-block,
+    body.theme-white-bg-black-border .social-btn,
+    body.theme-white-bg-black-border .action-btn,
+    body.theme-white-bg-black-border .stop-jackpot-btn,
+    body.theme-white-bg-black-border .stop-matadora-btn,
+    body.theme-white-bg-black-border .donate-btn,
+    body.theme-white-bg-black-border .donate-input,
+    body.theme-white-bg-black-border .feature-block h3,
+    body.theme-white-bg-black-border .feature-block p,
+    body.theme-white-bg-black-border .greeting-text { color: black; text-shadow: none; }
+    body.theme-white-bg-black-border .stream-card,
+    body.theme-white-bg-black-border .followers-block,
+    body.theme-white-bg-black-border .social-btn,
+    body.theme-white-bg-black-border .action-btn,
+    body.theme-white-bg-black-border .stop-jackpot-btn,
+    body.theme-white-bg-black-border .stop-matadora-btn,
+    body.theme-white-bg-black-border .donate-btn,
+    body.theme-white-bg-black-border .donate-input,
+    body.theme-white-bg-black-border .chat-line,
+    body.theme-white-bg-black-border .feature-block,
+    body.theme-white-bg-black-border .panel,
+    body.theme-white-bg-black-border .greeting-card { background: #f5f5f5; border-color: black; }
+    body.theme-white-bg-black-border .quote { border-left-color: black; }
+    body.theme-white-bg-black-border .greeting-name { border-bottom-color: black; }
+    body.theme-white-bg-black-border .nick-header { background: linear-gradient(135deg, #333, #666, #999); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    /* ========== ТЕМА 2: ЧЁРНЫЙ ФОН + БЕЛАЯ ОБВОДКА ========== */
+    body.theme-black-bg-white-border {
+      background: black;
+    }
+    body.theme-black-bg-white-border .stream-card {
+      background: rgba(0, 0, 0, 0.9);
+      border-color: white;
+      box-shadow: 0 0 50px rgba(255,255,255,0.1);
+    }
+    body.theme-black-bg-white-border .nick-header { background: linear-gradient(135deg, #fff, #ccc, #999); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    body.theme-black-bg-white-border .quote, body.theme-black-bg-white-border .greeting-text, body.theme-black-bg-white-border .chat-line, body.theme-black-bg-white-border .panel p, body.theme-black-bg-white-border footer { color: white; }
+    body.theme-black-bg-white-border .quote { border-left-color: white; }
+    body.theme-black-bg-white-border .followers-block, body.theme-black-bg-white-border .social-btn, body.theme-black-bg-white-border .action-btn, body.theme-black-bg-white-border .stop-jackpot-btn, body.theme-black-bg-white-border .stop-matadora-btn, body.theme-black-bg-white-border .donate-btn, body.theme-black-bg-white-border .donate-input { background: #333; border-color: white; color: white; }
+    body.theme-black-bg-white-border .chat-line { background: #222; border-left-color: white; color: white; }
+    body.theme-black-bg-white-border .feature-block, body.theme-black-bg-white-border .panel, body.theme-black-bg-white-border .greeting-card { background: #111; border-left-color: white; color: white; }
+    body.theme-black-bg-white-border .greeting-name { color: #ffaa44; border-bottom-color: white; }
+    body.theme-black-bg-white-border .congrats-title { color: #ffaa44; }
+    body.theme-black-bg-white-border .approve-text { color: #bf94ff; }
+
+    /* ========== ТЕМА 3: КРАСНЫЙ ФОН + БЕЛАЯ ОБВОДКА ========== */
+    body.theme-red-bg-white-border {
+      background: #c0392b;
+    }
+    body.theme-red-bg-white-border .stream-card {
+      background: rgba(0, 0, 0, 0.85);
+      border-color: white;
+    }
+    body.theme-red-bg-white-border .nick-header { background: linear-gradient(135deg, #ff6b6b, #ffaaaa, #fff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    body.theme-red-bg-white-border .quote, body.theme-red-bg-white-border .greeting-text, body.theme-red-bg-white-border .chat-line, body.theme-red-bg-white-border .panel p, body.theme-red-bg-white-border footer { color: white; }
+    body.theme-red-bg-white-border .quote { border-left-color: white; }
+    body.theme-red-bg-white-border .followers-block, body.theme-red-bg-white-border .social-btn, body.theme-red-bg-white-border .action-btn, body.theme-red-bg-white-border .stop-jackpot-btn, body.theme-red-bg-white-border .stop-matadora-btn, body.theme-red-bg-white-border .donate-btn, body.theme-red-bg-white-border .donate-input { background: #e74c3c; border-color: white; color: white; }
+    body.theme-red-bg-white-border .chat-line { background: #2a0a0a; border-left-color: white; color: white; }
+    body.theme-red-bg-white-border .feature-block, body.theme-red-bg-white-border .panel, body.theme-red-bg-white-border .greeting-card { background: #1a0505; border-left-color: white; color: white; }
+    body.theme-red-bg-white-border .greeting-name { color: #ffaa44; border-bottom-color: white; }
+    body.theme-red-bg-white-border .congrats-title { color: #ffaa44; }
+    body.theme-red-bg-white-border .approve-text { color: #ffaaaa; }
+
+    /* ========== ТЕМА 4: ФИОЛЕТОВЫЙ ФОН + БЕЛАЯ ОБВОДКА ========== */
+    body.theme-purple-bg-white-border {
+      background: #8e44ad;
+    }
+    body.theme-purple-bg-white-border .stream-card {
+      background: rgba(0, 0, 0, 0.85);
+      border-color: white;
+    }
+    body.theme-purple-bg-white-border .nick-header { background: linear-gradient(135deg, #bf77d6, #e0aaff, #fff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    body.theme-purple-bg-white-border .quote, body.theme-purple-bg-white-border .greeting-text, body.theme-purple-bg-white-border .chat-line, body.theme-purple-bg-white-border .panel p, body.theme-purple-bg-white-border footer { color: white; }
+    body.theme-purple-bg-white-border .quote { border-left-color: white; }
+    body.theme-purple-bg-white-border .followers-block, body.theme-purple-bg-white-border .social-btn, body.theme-purple-bg-white-border .action-btn, body.theme-purple-bg-white-border .stop-jackpot-btn, body.theme-purple-bg-white-border .stop-matadora-btn, body.theme-purple-bg-white-border .donate-btn, body.theme-purple-bg-white-border .donate-input { background: #9b59b6; border-color: white; color: white; }
+    body.theme-purple-bg-white-border .chat-line { background: #1a0525; border-left-color: white; color: white; }
+    body.theme-purple-bg-white-border .feature-block, body.theme-purple-bg-white-border .panel, body.theme-purple-bg-white-border .greeting-card { background: #0f001a; border-left-color: white; color: white; }
+    body.theme-purple-bg-white-border .greeting-name { color: #f1c40f; border-bottom-color: white; }
+    body.theme-purple-bg-white-border .congrats-title { color: #f1c40f; }
+    body.theme-purple-bg-white-border .approve-text { color: #d2b4de; }
+
+    /* ========== ТЕМА 5: СИНИЙ ФОН + БЕЛАЯ ОБВОДКА ========== */
+    body.theme-blue-bg-white-border {
+      background: #2980b9;
+    }
+    body.theme-blue-bg-white-border .stream-card {
+      background: rgba(0, 0, 0, 0.85);
+      border-color: white;
+    }
+    body.theme-blue-bg-white-border .nick-header { background: linear-gradient(135deg, #5dade2, #aed6f1, #fff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    body.theme-blue-bg-white-border .quote, body.theme-blue-bg-white-border .greeting-text, body.theme-blue-bg-white-border .chat-line, body.theme-blue-bg-white-border .panel p, body.theme-blue-bg-white-border footer { color: white; }
+    body.theme-blue-bg-white-border .quote { border-left-color: white; }
+    body.theme-blue-bg-white-border .followers-block, body.theme-blue-bg-white-border .social-btn, body.theme-blue-bg-white-border .action-btn, body.theme-blue-bg-white-border .stop-jackpot-btn, body.theme-blue-bg-white-border .stop-matadora-btn, body.theme-blue-bg-white-border .donate-btn, body.theme-blue-bg-white-border .donate-input { background: #3498db; border-color: white; color: white; }
+    body.theme-blue-bg-white-border .chat-line { background: #0a1a2a; border-left-color: white; color: white; }
+    body.theme-blue-bg-white-border .feature-block, body.theme-blue-bg-white-border .panel, body.theme-blue-bg-white-border .greeting-card { background: #050f1a; border-left-color: white; color: white; }
+    body.theme-blue-bg-white-border .greeting-name { color: #f1c40f; border-bottom-color: white; }
+    body.theme-blue-bg-white-border .congrats-title { color: #f1c40f; }
+    body.theme-blue-bg-white-border .approve-text { color: #aed6f1; }
+
+    /* ========== ТЕМА 6: ГОЛУБОЙ ФОН + БЕЛАЯ ОБВОДКА ========== */
+    body.theme-cyan-bg-white-border {
+      background: #16a085;
+    }
+    body.theme-cyan-bg-white-border .stream-card {
+      background: rgba(0, 0, 0, 0.85);
+      border-color: white;
+    }
+    body.theme-cyan-bg-white-border .nick-header { background: linear-gradient(135deg, #48c9b0, #a3e4d7, #fff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    body.theme-cyan-bg-white-border .quote, body.theme-cyan-bg-white-border .greeting-text, body.theme-cyan-bg-white-border .chat-line, body.theme-cyan-bg-white-border .panel p, body.theme-cyan-bg-white-border footer { color: white; }
+    body.theme-cyan-bg-white-border .quote { border-left-color: white; }
+    body.theme-cyan-bg-white-border .followers-block, body.theme-cyan-bg-white-border .social-btn, body.theme-cyan-bg-white-border .action-btn, body.theme-cyan-bg-white-border .stop-jackpot-btn, body.theme-cyan-bg-white-border .stop-matadora-btn, body.theme-cyan-bg-white-border .donate-btn, body.theme-cyan-bg-white-border .donate-input { background: #1abc9c; border-color: white; color: white; }
+    body.theme-cyan-bg-white-border .chat-line { background: #0a1a15; border-left-color: white; color: white; }
+    body.theme-cyan-bg-white-border .feature-block, body.theme-cyan-bg-white-border .panel, body.theme-cyan-bg-white-border .greeting-card { background: #05100a; border-left-color: white; color: white; }
+    body.theme-cyan-bg-white-border .greeting-name { color: #f1c40f; border-bottom-color: white; }
+    body.theme-cyan-bg-white-border .congrats-title { color: #f1c40f; }
+    body.theme-cyan-bg-white-border .approve-text { color: #a3e4d7; }
+
+    /* ========== ТЕМА 7: ОРАНЖЕВЫЙ ФОН + ЧЁРНАЯ ОБВОДКА ========== */
+    body.theme-orange-bg-black-border {
+      background: #e67e22;
+    }
+    body.theme-orange-bg-black-border .stream-card {
+      background: rgba(0, 0, 0, 0.9);
+      border-color: black;
+    }
+    body.theme-orange-bg-black-border .nick-header { background: linear-gradient(135deg, #f39c12, #f1c40f, #ffeaa7); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    body.theme-orange-bg-black-border .quote, body.theme-orange-bg-black-border .greeting-text, body.theme-orange-bg-black-border .chat-line, body.theme-orange-bg-black-border .panel p, body.theme-orange-bg-black-border footer { color: white; }
+    body.theme-orange-bg-black-border .quote { border-left-color: black; }
+    body.theme-orange-bg-black-border .followers-block, body.theme-orange-bg-black-border .social-btn, body.theme-orange-bg-black-border .action-btn, body.theme-orange-bg-black-border .stop-jackpot-btn, body.theme-orange-bg-black-border .stop-matadora-btn, body.theme-orange-bg-black-border .donate-btn, body.theme-orange-bg-black-border .donate-input { background: #e67e22; border-color: black; color: white; }
+    body.theme-orange-bg-black-border .chat-line { background: #2a1a0a; border-left-color: black; color: white; }
+    body.theme-orange-bg-black-border .feature-block, body.theme-orange-bg-black-border .panel, body.theme-orange-bg-black-border .greeting-card { background: #1a0f05; border-left-color: black; color: white; }
+    body.theme-orange-bg-black-border .greeting-name { color: #f1c40f; border-bottom-color: black; }
+    body.theme-orange-bg-black-border .congrats-title { color: #f1c40f; }
+    body.theme-orange-bg-black-border .approve-text { color: #ffeaa7; }
+
+    /* ОБЩИЕ СТИЛИ ДЛЯ ЭЛЕМЕНТОВ */
+    .color-panel {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 20px;
+      padding: 10px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 60px;
+    }
+
+    .color-btn {
+      padding: 8px 16px;
+      border-radius: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+      font-family: monospace;
+      border: 2px solid transparent;
+    }
+
+    .color-btn:hover { transform: scale(1.05); }
+
+    .donate-area {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .donate-input {
+      padding: 10px 15px;
+      border-radius: 40px;
+      font-weight: bold;
+      font-family: monospace;
+      border: 1px solid;
+      text-align: center;
+      width: 180px;
+    }
+
+    .donate-btn {
+      padding: 10px 20px;
+      border-radius: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+      font-family: monospace;
+      border: 1px solid;
+    }
+
+    .donate-btn:hover { transform: scale(1.05); }
+
+    .falling-money {
+      position: fixed;
+      font-size: 28px;
+      pointer-events: none;
+      z-index: 9999;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+
+    .theme-switch-btn, .status-btn, .jackpot-btn, .matadora-btn, .stop-jackpot-btn, .stop-matadora-btn, .stop-all-btn, .action-btn, .social-btn {
+      padding: 10px 20px;
+      border-radius: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+      font-family: monospace;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .theme-switch-btn:hover, .status-btn:hover, .action-btn:hover, .social-btn:hover, .stop-jackpot-btn:hover, .stop-matadora-btn:hover { transform: scale(1.02); }
+    .jackpot-btn {
+      background: linear-gradient(135deg, #ffd700, #ff8c00);
+      border: 2px solid #fff;
+      color: #1a0a2e;
+      text-shadow: 0 0 5px gold;
+    }
+    .jackpot-btn.playing { animation: pulseJackpot 0.8s infinite; background: linear-gradient(135deg, #ff4500, #ffd700); }
+    .matadora-btn {
+      background: linear-gradient(135deg, #ff69b4, #ff1493);
+      border: 2px solid #fff;
+      color: white;
+      text-shadow: 0 0 5px #ff1493;
+    }
+    .matadora-btn.playing { animation: pulseMatadora 0.8s infinite; background: linear-gradient(135deg, #ff1493, #ff69b4); }
+    @keyframes pulseMatadora {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 20, 147, 0.7); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255, 20, 147, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 20, 147, 0); }
+    }
+    @keyframes pulseJackpot {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+    }
+    .stop-all-btn { background: #8b0000; border-color: #ff4444; }
+    .stop-all-btn:hover { background: #cc0000; transform: scale(1.02); }
+    .nick-header {
+      font-size: 2.2rem;
+      font-weight: bold;
+      margin: 15px 0 10px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      display: inline-block;
+    }
+    .nick-header:hover { transform: scale(1.02); transition: 0.2s; }
+    .quote { font-style: italic; border-left: 4px solid; padding-left: 18px; margin: 15px 0; font-size: 1rem; }
+    .followers-block {
+      border-radius: 60px;
+      padding: 10px 25px;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 8px;
+      margin: 15px 0;
+      border: 1px solid gold;
+      animation: pulseGold 1s ease-in-out;
+    }
+    @keyframes pulseGold {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 gold; }
+      50% { transform: scale(1.02); box-shadow: 0 0 20px 5px gold; }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 gold; }
+    }
+    .followers-number { font-size: 2rem; font-weight: bold; color: gold; }
+    .social-links { display: flex; flex-wrap: wrap; gap: 15px; margin: 20px 0; }
+    .action-grid { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; }
+    .action-btn { padding: 10px 18px; font-size: 0.9rem; }
+    .panel {
+      border-radius: 28px;
+      padding: 25px;
+      margin: 20px 0;
+      border-left: 8px solid;
+    }
+    .chat-line { padding: 12px; margin: 12px 0; border-radius: 20px; border-left: 4px solid; }
+    .emote { font-size: 1.5rem; display: inline-block; margin-right: 10px; }
+    .congrats-block { margin-top: 40px; padding: 25px; background: rgba(0,0,0,0.2); border-radius: 32px; border-top: 3px solid gold; }
+    .congrats-title {
+      font-size: 2rem;
+      font-weight: 900;
+      text-align: center;
+      letter-spacing: 3px;
+      margin-bottom: 30px;
+    }
+    .greeting-card {
+      border-radius: 24px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-left: 6px solid gold;
+      transition: 0.2s;
+    }
+    .greeting-card:hover { transform: translateX(8px); }
+    .greeting-name {
+      font-size: 1.3rem;
+      font-weight: 900;
+      margin-bottom: 12px;
+      display: inline-block;
+      border-bottom: 2px dashed;
+    }
+    .greeting-text { font-size: 0.95rem; font-weight: 700; line-height: 1.5; }
+    .feature-block { border-radius: 24px; padding: 20px; margin: 20px 0; text-align: center; }
+    .bald-scale { border-radius: 30px; height: 30px; width: 100%; margin: 15px 0; overflow: hidden; background: #2a1a4a; }
+    .bald-fill { background: radial-gradient(circle, #ffaa44, #cc6600); width: 100%; height: 100%; text-align: center; color: black; font-weight: bold; line-height: 30px; }
+    .puzzle { display: flex; flex-direction: column; gap: 10px; margin: 15px 0; }
+    .puzzle-piece { background: #2a1a4a; padding: 10px; border-radius: 16px; cursor: pointer; }
+    .puzzle-piece:hover { background: #9146ff; }
+    .game-choice { display: inline-block; background: #2a1a4a; padding: 10px 20px; margin: 5px; border-radius: 40px; cursor: pointer; }
+    .game-choice:hover { background: #9146ff; transform: scale(1.05); }
+    @keyframes drop { 0% { transform: translateY(-50px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+    @keyframes fireFlicker { 0% { text-shadow: 0 0 5px red, 0 0 10px orange; } 50% { text-shadow: 0 0 20px red, 0 0 30px orange; } 100% { text-shadow: 0 0 5px red, 0 0 10px orange; } }
+    .fire-text { animation: fireFlicker 0.5s ease-in-out; font-size: 1.5rem; font-weight: bold; color: #ff6600; }
+    .approve-text {
+      font-size: 2rem;
+      font-weight: 900;
+      text-align: center;
+      letter-spacing: 4px;
+      margin-top: 15px;
+      animation: pulsePurple 1.5s infinite;
+    }
+    @keyframes pulsePurple { 0% { opacity: 0.9; } 50% { opacity: 1; } 100% { opacity: 0.9; } }
+    video { border-radius: 20px; width: 100%; max-height: 400px; background: #000; }
+    footer { margin-top: 30px; text-align: center; font-size: 0.7rem; opacity: 0.7; }
+    @media (max-width: 600px) {
+      .nick-header { font-size: 1.5rem; }
+      .followers-number { font-size: 1.5rem; }
+      .congrats-title { font-size: 1.4rem; }
+      .greeting-name { font-size: 1rem; }
+      .action-btn, .jackpot-btn, .matadora-btn, .stop-jackpot-btn, .stop-matadora-btn, .stop-all-btn, .color-btn, .donate-btn { padding: 6px 12px; font-size: 0.7rem; }
+      .donate-input { width: 120px; padding: 6px 10px; font-size: 0.7rem; }
+      .approve-text { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body class="theme-white-bg-black-border">
+
+<div class="stream-card">
+  <!-- ПАНЕЛЬ ВЫБОРА ЦВЕТА -->
+  <div class="color-panel">
+    <button class="color-btn" style="background:white; color:black; border-color:black;" onclick="setTheme('white-bg-black-border')">⚪ БЕЛЫЙ ФОН / ЧЁРНАЯ ОБВОДКА</button>
+    <button class="color-btn" style="background:black; color:white; border-color:white;" onclick="setTheme('black-bg-white-border')">⬛ ЧЁРНЫЙ ФОН / БЕЛАЯ ОБВОДКА</button>
+    <button class="color-btn" style="background:#c0392b; color:white; border-color:white;" onclick="setTheme('red-bg-white-border')">🔴 КРАСНЫЙ ФОН / БЕЛАЯ ОБВОДКА</button>
+    <button class="color-btn" style="background:#8e44ad; color:white; border-color:white;" onclick="setTheme('purple-bg-white-border')">🟣 ФИОЛЕТОВЫЙ ФОН / БЕЛАЯ ОБВОДКА</button>
+    <button class="color-btn" style="background:#2980b9; color:white; border-color:white;" onclick="setTheme('blue-bg-white-border')">🔵 СИНИЙ ФОН / БЕЛАЯ ОБВОДКА</button>
+    <button class="color-btn" style="background:#16a085; color:white; border-color:white;" onclick="setTheme('cyan-bg-white-border')">💙 ГОЛУБОЙ ФОН / БЕЛАЯ ОБВОДКА</button>
+    <button class="color-btn" style="background:#e67e22; color:white; border-color:black;" onclick="setTheme('orange-bg-black-border')">🟠 ОРАНЖЕВЫЙ ФОН / ЧЁРНАЯ ОБВОДКА</button>
+  </div>
+
+  <div style="display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; gap: 10px;">
+    <div>
+      <button id="statusBtn" class="status-btn">🔍 Статус эфира</button>
+    </div>
+    <span>#главныйЛысыйTwitch</span>
+  </div>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0; justify-content: center;">
+    <button id="jackpotBtn" class="jackpot-btn">🎰 HIT THE JACKPOT 🎰</button>
+    <button id="stopJackpotBtn" class="stop-jackpot-btn">⏹️ СТОП JACKPOT</button>
+    <button id="matadoraBtn" class="matadora-btn">💃 MATADORA</button>
+    <button id="stopMatadoraBtn" class="stop-matadora-btn">⏹️ СТОП MATADORA</button>
+    <button id="stopAllBtn" class="stop-all-btn">🛑 СТОП ВСЁ</button>
+  </div>
+
+  <div class="donate-area">
+    <input type="number" id="donateAmount" class="donate-input" placeholder="Сумма (15-10.000.000)" min="15" max="10000000" step="1" value="777">
+    <button id="donateBtn" class="donate-btn">💰 ЗАДОНАТИТЬ</button>
+  </div>
+
+  <div class="nick-header" id="secretNick">MIKLYXASHOW</div>
+  <div class="quote">«Голодный волк не обосрется.» (с) — Добро пожаловать на канал к главному лысому twitch.</div>
+  <div class="followers-block">🐺 <span class="followers-number">777</span> <span>фолловеров</span> <span style="font-size:0.8rem; opacity:0.7;">🎰 ДЖЕКПОТ! 🎰</span></div>
+  <div class="social-links">
+    <a href="https://t.me/miklyxashow" target="_blank" class="social-btn">📱 Telegram</a>
+    <a href="https://discord.gg/J5Gdg3BzaF" target="_blank" class="social-btn">🎮 Discord</a>
+    <a href="https://www.youtube.com/@MIKLYXASHORTS" target="_blank" class="social-btn">📺 YouTube Shorts</a>
+  </div>
+
+  <div class="action-grid">
+    <button class="action-btn" id="chatBtn">🐺 ЧАТ ВОЕТ</button>
+    <button class="action-btn" id="nicknameBtn">🎲 Генератор ников</button>
+    <button class="action-btn" id="complimentBtn">💖 Комплимент</button>
+    <button class="action-btn" id="thanksBtn">🙏 Спасибо стае</button>
+    <button class="action-btn" id="whatIfBtn">🤔 А если бы не стримил?</button>
+    <button class="action-btn" id="puzzleBtn">🧩 Пазл из цитат</button>
+    <button class="action-btn" id="donationRainBtn">💰 Дождь из донатов</button>
+    <button class="action-btn" id="shameBtn">😈 Зона позора</button>
+    <button class="action-btn" id="complaintBtn">📖 Жалобная книга</button>
+    <button class="action-btn" id="duelBtn">⚔️ Дуэль с волком</button>
+    <button class="action-btn" id="jokeBtn">🔥 ПРИКОЛ</button>
+  </div>
+
+  <div id="contentPanel" class="panel"><p>👇 Жми на кнопки — каждая выдаёт сюрприз 👇</p></div>
+
+  <div class="feature-block">
+    <video controls><source src="video.mp4" type="video/mp4">Твой браузер не поддерживает видео. Загрузи video.mp4 на GitHub.</video>
+    <div class="approve-text">АСУУУУУЖДАЮ</div>
+  </div>
+
+  <div class="feature-block">
+    <h3>🏆 СТЕНА СЛАВЫ ДОНАТЕРОВ</h3>
+    <div class="chat-line">💎 Дядя Вова — 500 виртуальных костей</div>
+    <div class="chat-line">💎 Анонимный волк — 777 «АУФ»</div>
+    <div class="chat-line">💎 Mellisa (ккс) — 1 тонна поддержки</div>
+    <div class="chat-line">💎 Ладно прохладно — мем в золотой рамке</div>
+    <div class="chat-line">💎 Стая целиком — 777 сердец ❤️</div>
+  </div>
+
+  <div class="feature-block">
+    <h3>🪞 ЗЕРКАЛО ДЛЯ ИМЕНИННИКА</h3>
+    <p style="font-size:1.2rem; font-weight:bold;">Посмотри на себя. Ты — тот самый волк. С 34-м, MIKLYXASHOW!</p>
+    <p>🐺 Лысина — знак мудрости. 777 — знак силы. Ты вожак стаи.</p>
+  </div>
+
+  <div class="feature-block">
+    <h3>🦲 ВОЛЧИЙ ДЕТЕКТОР ЛЫСИНЫ</h3>
+    <div class="bald-scale"><div class="bald-fill" style="width:100%;">БРУТАЛЬНЫЙ МИНИМУМ — 100%</div></div>
+    <p>✅ Уровень лысины: максимальный. Это не минус, а стиль!</p>
+  </div>
+
+  <div class="congrats-block">
+    <div class="congrats-title">🎉 ПОЗДРАВЛЯЕМ ТЕБЯ! 🎉</div>
+    <div class="greeting-card"><div class="greeting-name">🐒 Ладно прохладно:</div><div class="greeting-text">С 34-летием, наш главный исследователь джунглей твича! Ты не просто стример, ты Миклуха, который покоряет сердца зрителей без всяких мачете. Желаю, чтобы даже в самом диком лесу алгоритмов тебя находили только добрые люди. Не старей, а становись легендарнее. Успехов, хайпа и вкусняшек к столу!</div></div>
+    <div class="greeting-card"><div class="greeting-name">✝ Mellisa (ккс) ✝:</div><div class="greeting-text">Поздравляю тебя с днём рождения, чтоб хуй стоял надолго, чтоб были радости в житве и все шло не по пизде. Чтоб было денег дохуя и счастливая семья ❤️ спасибо за стримы</div></div>
+    <div class="greeting-card"><div class="greeting-name">⭐ Юнак:</div><div class="greeting-text">Мики, поздравляю тебя с днём рождения! Желаю тебе невероятного счастья, крепкого здоровья и исполнения всех заветных мечтаний. Пусть каждый день будет наполнен радостью и яркими моментами, а твои мечты становятся реальностью. Ты заслуживаешь самого лучшего, и я уверен, что этот год принесёт тебе множество удивительных событий и ярких впечатлений. С любовью и наилучшими пожеланиями. А самое главное чтобы хуй стоял и бабки были, а, ну и ещё чтобы ты стал популярным.</div></div>
+    <div class="greeting-card"><div class="greeting-name">🚛 БТР:</div><div class="greeting-text">с др епта чтоб лысина была всегда гладкая, руля для евро трак симулятор 2, и короче поздравляю</div></div>
+    <div class="greeting-card"><div class="greeting-name">🦝 Енот Даня:</div><div class="greeting-text">С днем рождения, лысый. Возраст конечно почтенный но ты все еще молодой и статный. Желаю чтоб лысина твоя сияла еще сильнее и чтоб у тебя в этом году был колаб с Эвелоном, хоте скорее у него с тобой.</div></div>
+    <div class="greeting-card"><div class="greeting-name">🔥 kurrfev:</div><div class="greeting-text">Поздравляю лысая башка, желаю тебе в эти 34 года побывать на слей и получить награду "Прорыв года"</div></div>
+    <div class="greeting-card"><div class="greeting-name">🐱 Nyan_CaT:</div><div class="greeting-text">Пр Миклуха с ДР. Оставайся таким же хорошим, добрым и самым лучшим и штобы ты и дальше также светился от счастья как и твоя лысина блестит</div></div>
+    <div class="greeting-card"><div class="greeting-name">🎉 NELLVI_FET:</div><div class="greeting-text">С днем рождения Мики! 🥳 желаю здоровья, счастья и что бы с Крис жил долго и счастливо 🥳</div></div>
+  </div>
+
+  <footer>🎂 34 года. 777 волков в стае. Один лысый король Twitch.</footer>
+</div>
+
+<script>
+  // ЗВУК ДОНАТА
+  const donateSound = new Audio('Money.mp3');
+  donateSound.volume = 0.8;
+
+  function createFallingMoney() {
+    const moneySymbols = ['💰', '💎', '🪙', '💵', '💶', '💷', '💸', '💲'];
+    for (let i = 0; i < 20; i++) {
+      setTimeout(() => {
+        const money = document.createElement('div');
+        money.className = 'falling-money';
+        money.innerHTML = moneySymbols[Math.floor(Math.random() * moneySymbols.length)];
+        const isLeft = Math.random() < 0.5;
+        if (isLeft) money.style.left = Math.random() * 30 + '%';
+        else money.style.left = 70 + Math.random() * 30 + '%';
+        money.style.top = '0px';
+        money.style.fontSize = (24 + Math.random() * 20) + 'px';
+        const duration = 2 + Math.random() * 3;
+        money.style.animationDuration = duration + 's';
+        document.body.appendChild(money);
+        setTimeout(() => money.remove(), duration * 1000);
+      }, i * 100);
+    }
+  }
+
+  function setTheme(theme) {
+    document.body.className = '';
+    document.body.classList.add('theme-' + theme);
+  }
+  window.setTheme = setTheme;
+
+  // МУЗЫКА
+  const jackpotAudio = new Audio('jackpot.mp3');
+  jackpotAudio.loop = true;
+  jackpotAudio.volume = 1.0;
+  let isJackpotPlaying = false;
+  const jackpotBtn = document.getElementById('jackpotBtn');
+  const stopJackpotBtn = document.getElementById('stopJackpotBtn');
+
+  const matadoraAudio = new Audio('Matadora.mp3');
+  matadoraAudio.loop = true;
+  matadoraAudio.volume = 1.0;
+  let isMatadoraPlaying = false;
+  const matadoraBtn = document.getElementById('matadoraBtn');
+  const stopMatadoraBtn = document.getElementById('stopMatadoraBtn');
+
+  const stopAllBtn = document.getElementById('stopAllBtn');
+
+  function toggleJackpot() {
+    if (isJackpotPlaying) {
+      jackpotAudio.pause();
+      jackpotBtn.innerHTML = '🎰 HIT THE JACKPOT 🎰';
+      jackpotBtn.classList.remove('playing');
+      isJackpotPlaying = false;
+    } else {
+      jackpotAudio.play().catch(e => console.log('Автовоспроизведение заблокировано'));
+      jackpotBtn.innerHTML = '🎰 JACKPOT ИГРАЕТ 🔥🎶';
+      jackpotBtn.classList.add('playing');
+      isJackpotPlaying = true;
+    }
+  }
+  function stopJackpot() {
+    jackpotAudio.pause();
+    jackpotAudio.currentTime = 0;
+    jackpotBtn.innerHTML = '🎰 HIT THE JACKPOT 🎰';
+    jackpotBtn.classList.remove('playing');
+    isJackpotPlaying = false;
+  }
+  function toggleMatadora() {
+    if (isMatadoraPlaying) {
+      matadoraAudio.pause();
+      matadoraBtn.innerHTML = '💃 MATADORA';
+      matadoraBtn.classList.remove('playing');
+      isMatadoraPlaying = false;
+    } else {
+      matadoraAudio.play().catch(e => console.log('Автовоспроизведение заблокировано'));
+      matadoraBtn.innerHTML = '💃 MATADORA ИГРАЕТ 🔥🎶';
+      matadoraBtn.classList.add('playing');
+      isMatadoraPlaying = true;
+    }
+  }
+  function stopMatadora() {
+    matadoraAudio.pause();
+    matadoraAudio.currentTime = 0;
+    matadoraBtn.innerHTML = '💃 MATADORA';
+    matadoraBtn.classList.remove('playing');
+    isMatadoraPlaying = false;
+  }
+  function stopAllMusic() { stopJackpot(); stopMatadora(); }
+  jackpotBtn.onclick = toggleJackpot;
+  stopJackpotBtn.onclick = stopJackpot;
+  matadoraBtn.onclick = toggleMatadora;
+  stopMatadoraBtn.onclick = stopMatadora;
+  stopAllBtn.onclick = stopAllMusic;
+
+  // ДОНАТ
+  const donateBtn = document.getElementById('donateBtn');
+  const donateAmount = document.getElementById('donateAmount');
+  donateBtn.onclick = () => {
+    let amount = parseFloat(donateAmount.value);
+    if (isNaN(amount)) amount = 777;
+    if (amount < 15) amount = 15;
+    if (amount > 10000000) amount = 10000000;
+    donateSound.currentTime = 0;
+    donateSound.play().catch(e => console.log('Звук не воспроизвёлся:', e));
+    createFallingMoney();
+    const panel = document.getElementById('contentPanel');
+    panel.innerHTML = `<div class="chat-line" style="text-align:center;">🎉 СПАСИБО ЗА ДОНАТ В ${amount}₽! 🎉<br>🐺 СТАЯ БЛАГОДАРИТ! 🐺</div>`;
+    setTimeout(() => { panel.innerHTML = '<p>👇 Жми на кнопки — каждая выдаёт сюрприз 👇</p>'; }, 3000);
+  };
+
+  // ОСТАЛЬНЫЕ ФУНКЦИИ
+  const panel = document.getElementById('contentPanel');
+  document.getElementById('jokeBtn').onclick = () => panel.innerHTML = `<div class="fire-text" style="text-align:center; padding:20px;">🔥 У ТЕБЯ ТЕЛЕВИЗОР ГОРИТ) 🔥</div><div class="chat-line">😎 Это не баг, а фича. С днём рождения, MIKLYXASHOW!</div>`;
+  document.getElementById('nicknameBtn').onclick = () => {
+    const prefixes = ['Лысый', 'Дикий', 'Вой', 'Голодный', 'Брутальный', 'Хитрожопый'];
+    const suffixes = ['Клык', 'Коготь', 'Волк', 'Плешак', 'Хвост', 'Рык'];
+    const rand = prefixes[Math.floor(Math.random() * prefixes.length)] + ' ' + suffixes[Math.floor(Math.random() * suffixes.length)];
+    panel.innerHTML = `<h3>🎲 Твой новый ник для стрима:</h3><div class="chat-line">🐺 ${rand}</div><p>Используй, если хочешь залететь в тренды!</p>`;
+  };
+  document.getElementById('complimentBtn').onclick = () => {
+    const compliments = ['Твой юмор заводит стаю больше, чем мясо', 'Ты единственный лысый, которого мы любим', 'Твои стримы — как витамин для волчьей души', 'С 777 фолловерами ты круче любого блогера', 'Голодный волк не обосрется — это твой жизненный кредо'];
+    const rand = compliments[Math.floor(Math.random() * compliments.length)];
+    panel.innerHTML = `<h3>💖 Комплимент от стаи:</h3><div class="chat-line">✨ ${rand}</div>`;
+  };
+  document.getElementById('thanksBtn').onclick = () => panel.innerHTML = `<h3>🙏 Спасибо, что вы есть</h3><div class="chat-line">И волк, и стая — едины. С 34-м, MIKLYXASHOW! 🐺❤️</div>`;
+  document.getElementById('whatIfBtn').onclick = () => panel.innerHTML = `<h3>🤔 АЛЬТЕРНАТИВНАЯ РЕАЛЬНОСТЬ</h3><div class="chat-line">Если бы ты не стримил, ты бы был охранником в супермаркете и гонял подростков. А так — ты легенда Twitch. Выбор очевиден.</div>`;
+  let puzzleSolved = false;
+  document.getElementById('puzzleBtn').onclick = () => {
+    if(puzzleSolved) { panel.innerHTML = `<h3>🧩 Ты уже собрал пазл!</h3><div class="chat-line">🎉 «Голодный волк не обосрется» — теперь твоя легенда на века.</div>`; return; }
+    panel.innerHTML = `<h3>🧩 СОБЕРИ ЦИТАТУ (нажми по порядку)</h3><div id="puzzleArea" class="puzzle"><div class="puzzle-piece" data-order="2">🐺 не обосрется.</div><div class="puzzle-piece" data-order="1">Голодный волк</div><div class="puzzle-piece" data-order="3">(с) MIKLYXASHOW</div></div><p id="puzzleMsg"></p>`;
+    let selected = [];
+    document.querySelectorAll('.puzzle-piece').forEach(p => {
+      p.onclick = () => {
+        selected.push(p.getAttribute('data-order'));
+        p.style.opacity = '0.5';
+        if(selected.length === 3) {
+          if(selected[0] === '1' && selected[1] === '2' && selected[2] === '3') {
+            document.getElementById('puzzleMsg').innerHTML = '<span style="color:gold;">✅ Правильно! Цитата собрана: «Голодный волк не обосрется»</span>';
+            puzzleSolved = true;
+          } else {
+            document.getElementById('puzzleMsg').innerHTML = '<span style="color:red;">❌ Не тот порядок. Обнови страницу и попробуй ещё!</span>';
+            selected = [];
+            document.querySelectorAll('.puzzle-piece').forEach(pc => pc.style.opacity = '1');
+          }
+        }
+      };
+    });
+  };
+  document.getElementById('chatBtn').onclick = () => {
+    panel.innerHTML = `<h3>🐺 СТАЯ ВОЕТ:</h3><div class="chat-line"><span class="emote">🐺</span> MIKLYXASHOW, с 34-м! Голодный волк сегодня нажрётся тортом!</div><div class="chat-line"><span class="emote">🔥</span> 777 фолловеров — джекпот! Ты главный лысый хищник</div><div class="chat-line"><span class="emote">🎮</span> Спасибо за стримы. Твоя цитата идёт в историю Twitch</div><div class="chat-line"><span class="emote">💜</span> Пусть донаты летят, а здоровье будет как у молодого волка</div><button id="howlBtn" style="margin-top:15px;">🐺 ЗАВОИТЬ СТАЕЙ</button>`;
+    const howl = document.getElementById('howlBtn');
+    if(howl) howl.onclick = () => alert('АУФФФФФ! 🐺 С днём рождения, MIKLYXASHOW! 777 — это только начало!');
+  };
+  document.getElementById('secretNick').onclick = () => alert('🔐 СЕКРЕТНОЕ ПОСЛАНИЕ: Ты — легенда. Стая помнит каждый твой стрим. И да... 777! ГОРДОСТЬ!');
+  document.getElementById('donationRainBtn').onclick = () => {
+    panel.innerHTML = `<h3>💰 ДОЖДЬ ИЗ ДОНАТОВ 💰</h3><div id="rainArea" style="height:150px; position:relative; overflow:hidden;"></div>`;
+    const rainArea = document.getElementById('rainArea');
+    for(let i=0; i<30; i++) {
+      const drop = document.createElement('div');
+      drop.innerHTML = Math.random() > 0.5 ? '💎' : '🪙';
+      drop.style.position = 'absolute';
+      drop.style.left = Math.random() * 100 + '%';
+      drop.style.top = '-30px';
+      drop.style.fontSize = '24px';
+      drop.style.animation = `drop ${0.5 + Math.random() * 0.5}s linear forwards`;
+      rainArea.appendChild(drop);
+      setTimeout(() => drop.remove(), 1000);
+    }
+    setTimeout(() => panel.innerHTML += `<div class="chat-line">🎉 Стая закидала тебя донатами! 777 поздравлений! 🎉</div>`, 500);
+  };
+  let banned = false;
+  document.getElementById('shameBtn').onclick = () => {
+    if(banned) { panel.innerHTML = `<h3>😈 ТЫ УЖЕ В БАНЕ</h3><div class="chat-line">Осталось ждать... Шучем, бан учебный. Возвращайся к стае!</div>`; return; }
+    banned = true;
+    panel.innerHTML = `<h3>😈 ЗОНА ПОЗОРА 😈</h3><div class="chat-line">⛔ ТЫ ПОЛУЧИЛ БАН НА 5 СЕКУНД ЗА ХЕЙТЕРСТВО ⛔</div><div id="unbanTimer"></div>`;
+    let seconds = 5;
+    const interval = setInterval(() => {
+      seconds--;
+      const timerEl = document.getElementById('unbanTimer');
+      if(timerEl) timerEl.innerText = `⏳ До разбана: ${seconds} сек...`;
+      if(seconds <= 0) {
+        clearInterval(interval);
+        banned = false;
+        panel.innerHTML = `<h3>✅ ТЫ РАЗБАНЕН</h3><div class="chat-line">Стая прощает... Но в следующий раз не будь хейтером! 🐺</div>`;
+      }
+    }, 1000);
+  };
+  const complaints = [
+    '«Слишком мало АУФ в последнее время!» — зритель Волк_с_Урала',
+    '«Лысина ослепляет, надень кепку» — Анонимный хейтер (но мы тебя любим)',
+    '«777 фолловеров? Мы хотим 1000!» — Стая в полном составе',
+    '«Твои шутки слишком смешные, я упал со стула» — Подписчик Игорь',
+    '«Голодный волк обосрался? Нет, это легенда!» — Тайный фанат'
+  ];
+  document.getElementById('complaintBtn').onclick = () => {
+    const rand = complaints[Math.floor(Math.random() * complaints.length)];
+    panel.innerHTML = `<h3>📖 ЖАЛОБНАЯ КНИГА ЗРИТЕЛЕЙ</h3><div class="chat-line">📢 ${rand}</div><p>🙈 Стая приняла жалобу... и поржала.</p>`;
+  };
+  document.getElementById('duelBtn').onclick = () => {
+    panel.innerHTML = `<h3>⚔️ ДУЭЛЬ С ВОЛКОМ ⚔️</h3><p>Выбери оружие:</p><div><span class="game-choice" data-move="камень">🪨 Камень</span><span class="game-choice" data-move="ножницы">✂️ Ножницы</span><span class="game-choice" data-move="бумага">📄 Бумага</span></div><div id="duelResult"></div>`;
+    const moves = { камень: '🪨', ножницы: '✂️', бумага: '📄' };
+    const winPhrases = ['Ты победил волка! АУФ в твою честь! 🎉', 'Волк рычит от злости, но признаёт поражение!'];
+    const losePhrases = ['Волк разорвал тебя... В следующий раз повезёт! 🐺', 'Ты проиграл. Волк голоден, но сегодня он добрый, отпускает.'];
+    const drawPhrases = ['Ничья! Волк и ты смотрите друг на друга... Переигровка!', 'Боевая ничья. Стая аплодирует обоим.'];
+    document.querySelectorAll('.game-choice').forEach(el => {
+      el.onclick = () => {
+        const playerMove = el.getAttribute('data-move');
+        const movesList = ['камень', 'ножницы', 'бумага'];
+        const wolfMove = movesList[Math.floor(Math.random() * 3)];
+        const resultDiv = document.getElementById('duelResult');
+        let resultText = `Твой ход: ${moves[playerMove]} | Ход волка: ${moves[wolfMove]}. `;
+        if(playerMove === wolfMove) resultText += drawPhrases[Math.floor(Math.random() * drawPhrases.length)];
+        else if((playerMove === 'камень' && wolfMove === 'ножницы') || (playerMove === 'ножницы' && wolfMove === 'бумага') || (playerMove === 'бумага' && wolfMove === 'камень')) resultText += winPhrases[Math.floor(Math.random() * winPhrases.length)];
+        else resultText += losePhrases[Math.floor(Math.random() * losePhrases.length)];
+        resultDiv.innerHTML = `<div class="chat-line">${resultText}</div>`;
+      };
+    });
+  };
+  const statusBtn = document.getElementById('statusBtn');
+  const CLIENT_ID = 'kimne78kx3ncx6brgo4mv6wki5h1ko';
+  const USER_LOGIN = 'miklyxashow';
+  statusBtn.onclick = async () => {
+    statusBtn.textContent = '⏳ Загрузка...';
+    statusBtn.disabled = true;
+    try {
+      const response = await fetch(`https://api.twitch.tv/helix/streams?user_login=${USER_LOGIN}`, { headers: { 'Client-ID': CLIENT_ID } });
+      const data = await response.json();
+      const isLive = data.data && data.data.length > 0;
+      if (isLive) {
+        const streamData = data.data[0];
+        const startedAt = new Date(streamData.started_at);
+        const diffMs = new Date() - startedAt;
+        const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+        const diffMinutes = Math.floor((diffMs % 3600000) / 60000);
+        statusBtn.innerHTML = `🔴 В СТРИМЕ! Уже ${diffHours}ч ${diffMinutes}мин 🔴`;
+        statusBtn.style.background = '#eb0400';
+      } else { statusBtn.innerHTML = `📡 Последний стрим: сегодня (по данным Twitch) 📡`; statusBtn.style.background = '#2a1a4a'; }
+    } catch (error) { statusBtn.innerHTML = `⚠️ Не удалось загрузить статус ⚠️`; statusBtn.style.background = '#2a1a4a'; }
+    statusBtn.disabled = false;
+  };
+</script>
+</body>
+</html>
